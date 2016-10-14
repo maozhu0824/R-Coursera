@@ -1,0 +1,152 @@
+# R-Coursera
+
+c(1,2,3,4) + c(0, 10)
+[1]  1 12  3 14
+
+# List all the objects in your local workspace using ls().
+# List all the files in your working directory using list.files() or dir().
+# Using the args() function on a function name is also a handy way to see what arguments a function can take.
+args(list.files)
+
+dir.create("testdir")
+setwd("testdir")
+file.create("mytest.R")
+list.files()
+file.exists("mytest.R")
+file.info("mytest.R")
+
+# You can use the $ operator --- e.g.,file.info("mytest.R")$mode --- to grab specific items.file.info("mytest.R")$mode
+
+# Change the name of the file "mytest.R" to "mytest2.R" by using: 
+file.rename()
+
+# Make a copy of "mytest2.R" called "mytest3.R" using
+file.copy().
+
+# Provide the relative path to the file "mytest3.R" by using
+file.path().
+# You can use file.path to construct file and directory paths that are independent of the operating system your R code is running on. 
+# Pass 'folder1' and 'folder2' as arguments to file.path to make a platform-independent pathname.
+file.path("folder1","folder2")
+
+# Create a directory in the current working directory called "testdir2" and a subdirectory for it called "testdir3", all in one command 
+by using dir.create() and file.path(). Take a look at the documentation for dir.create by entering ?dir.create . Notice the 'recursive' 
+argument. In order to create nested directories, 'recursive' must be set to TRUE.
+dir.create(path = file.path("testdir2","testdir3"),recursive = TRUE)
+
+# To delete a directory you need to use the recursive = TRUE argument with the function unlink(). If you don't use recursive = TRUE, 
+R is concerned that you're unaware that you're deleting a directory and all of its contents. R reasons that, if you don't specify that recursive equals TRUE, you don't know that something is in the directory you're trying to delete. R tries to prevent you from making a
+mistake.
+unlink("testdir", recursive = TRUE)
+
+## Sequences of Numbers
+> pi:10  #real
+[1] 3.141593 4.141593 5.141593 6.141593 7.141593 8.141593
+[7] 9.141593
+
+ > 15:1
+ [1] 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1
+ 
+> seq(1,20)
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+ 
+> seq(0,10,by = 0.5)
+ [1]  0.0  0.5  1.0  1.5  2.0  2.5  3.0  3.5  4.0  4.5  5.0  5.5
+[13]  6.0  6.5  7.0  7.5  8.0  8.5  9.0  9.5 10.0
+
+> my_seq <- seq(5,10,length = 30)
+> length(my_seq)
+[1] 30
+
+> 1: length(my_seq)
+> seq(along.with = my_seq)
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+[21] 21 22 23 24 25 26 27 28 29 30
+
+> seq_along(my_seq)   # R built-in function
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+[26] 26 27 28 29 30
+
+> rep(0,times = 40)
+ [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[39] 0 0
+
+> rep(c(0,1,2), times = 10)
+ [1] 0 1 2 0 1 2 0 1 2 0 1 2 0 1 2 0 1 2 0 1 2 0 1 2 0 1 2 0 1 2
+ 
+> rep(c(0,1,2), each = 10)
+ [1] 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2
+> my_vector
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 2
+
+
+
+# Vectors: The simplest and most common data structure in R is the vector.
+# Vectors come in two different flavors: atomic vectors and lists. An atomic vector contains exactly one data type, whereas a list may 
+contain multiple data types. 
+> num_vect <- c(0.5, 55,-10, 6)
+> tf <- num_vect<1
+
+> tf
+[1]  TRUE FALSE  TRUE FALSE
+# If we have two logical expressions, A and B, we can ask whether at least one is TRUE with A | B (logical 'or' a.k.a. 'union') or 
+whether they are both TRUE with A & B (logical 'and' a.k.a. 'intersection'). Lastly, !A is the negationof A and is TRUE when A is FALSE 
+and vice versa.
+
+> my_char <- c("My","name","is")
+> paste(my_char,collapse = " ")
+[1] "My name is"
+> my_name <- c(my_char, "Zhu")
+> paste(my_name, collapse = " ")
+> paste("Hello", "world!", sep = " ") 
+[1] "Hello world!"
+> paste(1:3, c("X","Y","Z"),sep = "") 
+[1] "1X" "2Y" "3Z"
+> paste(LETTERS, 1:4, sep = "-")
+ [1] "A-1" "B-2" "C-3" "D-4" "E-1" "F-2" "G-3" "H-4" "I-1" "J-2" "K-3" "L-4"
+[13] "M-1" "N-2" "O-3" "P-4" "Q-1" "R-2" "S-3" "T-4" "U-1" "V-2" "W-3" "X-4"
+[25] "Y-1" "Z-2"
+# Also worth noting is that the numeric vector 1:4 gets 'coerced' into a character vector by the paste() function.
+
+
+# Missing Values
+# Missing values play an important role in statistics and data analysis. Often, missing values must not be ignored, but rather they 
+should be carefully studied to see if there's an underlying pattern or cause for their missingness.
+# In R, NA is used to represent any value that is 'not available' or 'missing' (in the statistical sense). In this lesson, we'll explore 
+missing values further.
+> x <- c(44, NA, 5, NA)
+> x*3
+[1] 132  NA  15  NA
+> y <- rnorm(1000)
+> z <- rep(NA, 1000)
+> my_data <- sample(c(y,z),100)
+> my_na <- is.na(my_data)
+# The trick is to recognize that underneath the surface, R represents TRUE as the number 1 and FALSE as the number 0. Therefore, if we 
+take the sum of a bunch of TRUEs and FALSEs, we get the total number of TRUEs.
+> sum(my_na)
+[1] 47
+
+> 0/0
+[1] NaN  #NaN, which stands for 'not a number'
+
+> Inf - Inf
+[1] NaN
+
+
+
+
+# Matrices and Data Frames
+# The main difference is that matrices can only contain a single class of data, while data frames can consist of many different classes 
+of data.
+
+> my_vector <- 1:20
+
+
+
+
+
+
+
+
+
+ 

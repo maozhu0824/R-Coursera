@@ -1,0 +1,148 @@
+# R-Coursera
+# lapply and sapply 
+| These powerful functions, along with their close relatives (vapply() and
+| tapply(), among others) offer a concise and convenient means of implementing
+| the Split-Apply-Combine strategy for data analysis.
+
+| The lapply() function takes a list as input, applies a function to each
+| element of the list, then returns a list of the same length as the original
+| one. Since a data frame is really just a list of vectors (you can see this
+| with as.list(flags)), we can use lapply() to apply the class() function to
+| each column of the flags dataset.
+
+> cls_list <- lapply(flags, class)
+
+| The 'l' in 'lapply' stands for 'list'. 
+> as.character(cls_list)
+ [1] "factor"  "integer" "integer" "integer" "integer" "integer" "integer"
+ [8] "integer" "integer" "integer" "integer" "integer" "integer" "integer"
+[15] "integer" "integer" "integer" "factor"  "integer" "integer" "integer"
+[22] "integer" "integer" "integer" "integer" "integer" "integer" "integer"
+[29] "factor"  "factor" 
+
+| The lapply() function takes a list as input, applies a function to each
+| element of the list, then returns a list of the same length as the original
+| one. The 'l' in 'lapply' stands for 'list'
+
+| sapply() allows you to automate this process by calling lapply() behind the
+| scenes, but then attempting to simplify (hence the 's' in 'sapply') the
+| result for you.
+
+| In general, if the result is a list where every element is of length one,
+| then sapply() returns a vector. If the result is a list where every element
+| is a vector of the same length (> 1), sapply() returns a matrix. If sapply()
+| can't figure things out, then it just returns a list, no different from what
+| lapply() would give you.
+
+> lapply(flag_shapes,range)
+$circles
+[1] 0 4
+
+$crosses
+[1] 0 2
+
+$saltires
+[1] 0 1
+
+$quarters
+[1] 0 4
+
+$sunstars
+[1]  0 50
+
+
+> shape_mat
+     circles crosses saltires quarters sunstars
+[1,]       0       0        0        0        0
+[2,]       4       2        1        4       50
+
+
+>  lapply(unique_vals, function(elem) elem[2])
+
+
+
+# vapply and tapply
+| If we wish to be explicit about the format of the result we expect, we can
+| use vapply(flags, class, character(1)). The 'character(1)' argument tells R
+| that we expect the class function to return a character vector of length 1
+| when applied to EACH column of the flags dataset. Try it now.
+
+> vapply(flags, class, character(1))
+      name   landmass       zone       area population   language   religion 
+  "factor"  "integer"  "integer"  "integer"  "integer"  "integer"  "integer" 
+      bars    stripes    colours        red      green       blue       gold 
+ "integer"  "integer"  "integer"  "integer"  "integer"  "integer"  "integer" 
+     white      black     orange    mainhue    circles    crosses   saltires 
+ "integer"  "integer"  "integer"   "factor"  "integer"  "integer"  "integer" 
+  quarters   sunstars   crescent   triangle       icon    animate       text 
+ "integer"  "integer"  "integer"  "integer"  "integer"  "integer"  "integer" 
+   topleft   botright 
+  "factor"   "factor" 
+
+| You might think of vapply() as being 'safer' than sapply(), since it
+| requires you to specify the format of the output in advance, instead of just
+| allowing R to 'guess' what you wanted. In addition, vapply() may perform
+| faster than sapply() for large datasets. However, when doing data analysis
+| interactively (at the prompt), sapply() saves you some typing and will often
+| be good enough.
+
+| As a data analyst, you'll often wish to split your data up into groups based
+| on the value of some variable, then apply a function to the members of each
+| group. The next function we'll look at, tapply(), does exactly that.
+
+> table(flags$landmass)
+
+ 1  2  3  4  5  6 
+31 17 35 52 39 20 
+
+| If you take the arithmetic mean of a bunch of 0s and 1s, you get the
+| proportion of 1s. Use tapply(flags$animate, flags$landmass, mean) to apply
+| the mean function to the 'animate' variable separately for each of the six
+| landmass groups, thus giving us the proportion of flags containing an
+| animate image WITHIN each landmass group.
+
+> tapply(flags$animate, flags$landmass, mean)
+
+       1         2         3         4         5         6 
+0.4193548 0.1764706 0.1142857 0.1346154 0.1538462 0.3000000 
+
+| Similarly, we can look at a summary of population values (in round millions)
+| for countries with and without the color red on their flag with
+| tapply(flags$population, flags$red, summary).
+
+> tapply(flags$population, flags$red, summary)
+$`0`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    3.00   27.63    9.00  684.00 
+
+$`1`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     4.0    22.1    15.0  1008.0 
+
+
+> tapply(flags$population, flags$landmass, summary)
+$`1`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   12.29    4.50  231.00 
+
+$`2`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    1.00    6.00   15.71   15.00  119.00 
+
+$`3`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    8.00   13.86   16.00   61.00 
+
+$`4`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   1.000   5.000   8.788   9.750  56.000 
+
+$`5`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    2.00   10.00   69.18   39.00 1008.00 
+
+$`6`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   11.30    1.25  157.00 
+   
+   

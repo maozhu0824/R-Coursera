@@ -1,0 +1,120 @@
+# R-Coursera
+# Looking at Data 
+| Whenever you're working with a new dataset, the first thing you should do is
+| look at it! What is the format of the data? What are the dimensions? What
+| are the variable names? How are the variables stored? Are there missing
+| data? Are there any flaws in the data?
+
+| If you are curious as to how much space the dataset is occupying in memory,
+| you can use object.size(plants).
+> object.size(plants)
+644232 bytes
+
+| Now that we have a sense of the shape and size of the dataset, let's get a
+| feel for what's inside. names(plants) will return a character vector of
+| column (i.e. variable) names. Give it a shot.
+
+> head(plants,10)  # view first 10 rows 
+
+> tail(plants, 15)  #view last 15 rows
+
+> summary(plants)  #could be able to see how many NAs are there
+
+> table(plants$Active_Growth_Period)
+
+| Perhaps the most useful and concise function for understanding the
+| *str*ucture of your data is str(). Give it a try now.
+
+> str(plants)
+'data.frame':	5166 obs. of  10 variables:
+ $ Scientific_Name     : Factor w/ 5166 levels "Abelmoschus",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ Duration            : Factor w/ 8 levels "Annual","Annual, Biennial",..: NA 4 NA 7 7 NA 1 NA 7 7 ...
+ $ Active_Growth_Period: Factor w/ 8 levels "Fall, Winter and Spring",..: NA NA NA 4 NA NA NA NA 4 NA ...
+ $ Foliage_Color       : Factor w/ 6 levels "Dark Green","Gray-Green",..: NA NA NA 3 NA NA NA NA 3 NA ...
+ $ pH_Min              : num  NA NA NA 4 NA NA NA NA 7 NA ...
+ $ pH_Max              : num  NA NA NA 6 NA NA NA NA 8.5 NA ...
+ $ Precip_Min          : int  NA NA NA 13 NA NA NA NA 4 NA ...
+ $ Precip_Max          : int  NA NA NA 60 NA NA NA NA 20 NA ...
+ $ Shade_Tolerance     : Factor w/ 3 levels "Intermediate",..: NA NA NA 3 NA NA NA NA 2 NA ...
+ $ Temp_Min_F          : int  NA NA NA -43 NA NA NA NA -13 NA ...
+
+
+
+
+# Simulation: 
+
+> sample(1:6,4,replace = TRUE)
+[1] 4 1 2 3
+
+All of the standard probability distributions are built into R, including
+| exponential (rexp()), chi-squared (rchisq()), gamma (rgamma()),> LETTERS
+ [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R"
+[19] "S" "T" "U" "V" "W" "X" "Y" "Z"
+
+> sample(LETTERS)
+ [1] "L" "I" "P" "F" "K" "Q" "B" "U" "G" "O" "W" "X" "R" "Z" "V" "E" "H" "Y"
+[19] "D" "M" "C" "T" "J" "A" "N" "S"
+
+| You are doing so well!
+
+  |=====================                                                |  30%
+
+| This is identical to taking a sample of size 26 from LETTERS, without
+| replacement. When the 'size' argument to sample() is not specified, R takes
+| a sample equal in size to the vector from which you are sampling.
+
+
+| Let the value 0 represent tails and the value 1 represent heads. Use
+| sample() to draw a sample of size 100 from the vector c(0,1), with
+| replacement. Since the coin is unfair, we must attach specific probabilities
+| to the values 0 (tails) and 1 (heads) with a fourth argument, prob = c(0.3,
+| 0.7). Assign the result to a new variable called flips.
+> flips <- sample(c(0,1),100, replace=TRUE, c(0.3, 0.7))
+
+
+| Each probability distribution in R has an r*** function (for "random"), a
+| d*** function (for "density"), a p*** (for "probability"), and q*** (for
+| "quantile"). 
+
+
+| A binomial random variable represents the number of 'successes' (heads) in a
+| given number of independent 'trials' (coin flips). Therefore, we can
+| generate a single random variable that represents the number of heads in 100
+| flips of our unfair coin using rbinom(1, size = 100, prob = 0.7). Note that
+| you only specify the probability of 'success' (heads) and NOT the
+| probability of 'failure' (tails). Try it now.
+
+> rbinom(1,size = 100, prob = 0.7)
+[1] 78
+
+| Equivalently, if we want to see all of the 0s and 1s, we can request 100
+| observations, each of size 1, with success probability of 0.7. Give it a
+| try, assigning the result to a new variable called flips2.
+> flips2 <- rbinom(100, size = 1, prob = 0.7)
+
+
+| Finally, what if we want to simulate 100 *groups* of random numbers, each
+| containing 5 values generated from a Poisson distribution with mean 10?
+> my_pois <- replicate(100,rpois(5,10))
+
+All of the standard probability distributions are built into R, including
+| exponential (rexp()), chi-squared (rchisq()), gamma (rgamma())
+
+
+# Base Graphics
+| Plot cars so that the plotted points are colored red. (Use col = 2 to achieve
+| this effect.)
+> plot(cars, col = 2)
+
+| Plot cars while limiting the x-axis to 10 through 15.  (Use xlim = c(10, 15)
+| to achieve this effect.)
+> plot(cars, xlim = c(10,15))
+
+| Plot cars using triangles.  (Use pch = 2 to achieve this effect.)
+> plot(cars, pch = 2)
+
+> boxplot(formula = mpg ~ cyl, data = mtcars) 
+
+
+
+
